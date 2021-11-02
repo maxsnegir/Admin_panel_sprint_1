@@ -1,4 +1,4 @@
-from sqlite_to_postgres.dataclases import FilmWork, Genre, Person
+from sqlite_to_postgres.dataclases import FilmWork, Genre, Person, FilmWorkGenre, PersonFilmWork
 from dataclasses import astuple
 
 
@@ -15,7 +15,9 @@ class PostgresSaver:
         slots = {
             "film_work": tuple(FilmWork.__slots__),
             "genre": tuple(Genre.__slots__),
-            "person": tuple(Person.__slots__)
+            "person": tuple(Person.__slots__),
+            "genre_film_work": tuple(FilmWorkGenre.__slots__),
+            "person_film_work": tuple(PersonFilmWork.__slots__)
         }
 
         for table, values in data.items():

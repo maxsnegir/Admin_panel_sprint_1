@@ -1,6 +1,6 @@
 import sqlite3
 
-from sqlite_to_postgres.dataclases import FilmWork, Genre, Person
+from sqlite_to_postgres.dataclases import FilmWork, Genre, Person, FilmWorkGenre, PersonFilmWork
 
 
 class SQLiteLoader:
@@ -50,11 +50,34 @@ class SQLiteLoader:
                                   ))
         return persons
 
+    def get_all_genre_films(self) -> list:
+        """ Получение всех персон из таблицы genre_film_work """
+
+        genre_films = []
+        query = """SELECT * FROM genre_film_work"""
+        for row in self.cursor.execute(query):
+            genre_films.append(FilmWorkGenre(id=row["id"], film_work_id=row["film_work_id"],
+                                             genre_id=row["genre_id"], created_at=row["created_at"]))
+        return genre_films
+
+    def get_all_person_film_work(self) -> list:
+        """ Получение всех персон из таблицы person_film_work """
+
+        person_film_work = []
+        query = """SELECT * FROM person_film_work"""
+        for row in self.cursor.execute(query):
+            person_film_work.append(PersonFilmWork(id=row["id"], film_work_id=row["film_work_id"],
+                                                   person_id=row["person_id"], role=row["role"],
+                                                   created_at=row["created_at"]))
+        return person_film_work
+
     def load_movies(self) -> dict:
-        """ Возвращает словарь с данными из таблиц person, film_work, genre """
+        """ Возвращает словарь с данными из таблиц person, film_work, genre... """
 
         return {
             "film_work": self.get_all_movies(),
             "genre": self.get_all_genres(),
-            "person": self.get_all_persons()
+            "person": self.get_all_persons(),
+            "genre_film_work": self.get_all_genre_films(),
+            "person_film_work": self.get_all_person_film_work()
         }
