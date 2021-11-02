@@ -19,6 +19,8 @@ class PostgresSaver:
         }
 
         for table, values in data.items():
+
+            # Определяем сколько значений нужно вставить в таблицу
             values_count = ", ".join(["%s" for _ in range(len(slots.get(table)))])
             args = ', '.join(self.cursor.mogrify(f"({values_count})", astuple(row)).decode() for row in values)
 

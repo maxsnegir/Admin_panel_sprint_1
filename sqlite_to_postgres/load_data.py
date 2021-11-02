@@ -12,7 +12,6 @@ def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
     postgres_saver = PostgresSaver(pg_conn)
     sqlite_loader = SQLiteLoader(connection)
     data = sqlite_loader.load_movies()
-
     postgres_saver.save_all_data(data)
 
 
