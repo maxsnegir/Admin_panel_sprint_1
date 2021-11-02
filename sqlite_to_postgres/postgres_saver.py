@@ -13,11 +13,11 @@ class PostgresSaver:
         """ Основной метод для загрузки данных в таблицы postgres """
 
         slots = {
-            "film_work": tuple(FilmWork.__slots__),
-            "genre": tuple(Genre.__slots__),
-            "person": tuple(Person.__slots__),
-            "genre_film_work": tuple(FilmWorkGenre.__slots__),
-            "person_film_work": tuple(PersonFilmWork.__slots__)
+            "film_work": FilmWork.__slots__,
+            "genre": Genre.__slots__,
+            "person": Person.__slots__,
+            "genre_film_work": FilmWorkGenre.__slots__,
+            "person_film_work": PersonFilmWork.__slots__
         }
 
         for table, values in data.items():
