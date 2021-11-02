@@ -1,17 +1,19 @@
 import sqlite3
-
 import psycopg2
 from psycopg2.extensions import connection as _connection
 from psycopg2.extras import DictCursor
 
+from sqlite_loader import SQLiteLoader
+from sqlite_to_postgres.postgres_saver import PostgresSaver
+
 
 def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
     """Основной метод загрузки данных из SQLite в Postgres"""
-    # postgres_saver = PostgresSaver(pg_conn)
-    # sqlite_loader = SQLiteLoader(connection)
+    postgres_saver = PostgresSaver(pg_conn)
+    sqlite_loader = SQLiteLoader(connection)
+    data = sqlite_loader.load_movies()
 
-    # data = sqlite_loader.load_movies()
-    # postgres_saver.save_all_data(data)
+    postgres_saver.save_all_data(data)
 
 
 if __name__ == '__main__':
