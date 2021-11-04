@@ -1,4 +1,4 @@
-from sqlite_to_postgres.dataclases import FilmWork, Genre, Person, FilmWorkGenre, PersonFilmWork
+from sqlite_to_postgres.dataclasses import FilmWork, Genre, Person, FilmWorkGenre, PersonFilmWork
 from dataclasses import astuple
 
 
@@ -9,7 +9,7 @@ class PostgresSaver:
         self.connection = connection
         self.cursor = self.connection.cursor()
 
-    def save_all_data(self, data: dict) -> bool:
+    def save_all_data(self, data: dict) -> None:
         """ Основной метод для загрузки данных в таблицы postgres """
 
         slots = {
@@ -17,21 +17,14 @@ class PostgresSaver:
             "genre": Genre.__slots__,
             "person": Person.__slots__,
             "genre_film_work": FilmWorkGenre.__slots__,
-            "person_film_work": PersonFilmWork.__slots__
+            "person_film_work": PersonFilmWork.__slots__,
         }
 
         for table, values in data.items():
 
-            # Определяем сколько значений нужно вставить в таблицу
+            # Определяем сколько значений нужно вставить в таблицу:  %s * slots_len
             values_count = ", ".join(["%s" for _ in range(len(slots.get(table)))])
             args = ', '.join(self.cursor.mogrify(f"({values_count})", astuple(row)).decode() for row in values)
 
             query = """INSERT INTO content.{}  VALUES {} ON CONFLICT (id) DO NOTHING""".format(table, args)
             self.cursor.execute(query)
-        return True
-
-
-
-
-
-
