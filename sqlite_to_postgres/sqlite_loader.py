@@ -1,6 +1,6 @@
 import sqlite3
 
-from sqlite_to_postgres.dataclasses import FilmWork, Genre, Person, FilmWorkGenre, PersonFilmWork
+from sqlite_to_postgres.dataclasses_models import FilmWork, Genre, Person, FilmWorkGenre, PersonFilmWork
 
 
 class SQLiteLoader:

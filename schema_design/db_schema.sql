@@ -1,6 +1,6 @@
 -- Удаление и создание новой базы
-DROP DATABASE IF EXISTS movies;
-CREATE DATABASE movies;
+DROP DATABASE IF EXISTS movies_database;
+CREATE DATABASE movies_database;
 
 -- Создание отдельной схемы
 CREATE SCHEMA IF NOT EXISTS content;
