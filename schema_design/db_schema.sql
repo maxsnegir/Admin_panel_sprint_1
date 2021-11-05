@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS content.film_work (
     creation_date DATE,
     certificate TEXT,
     file_path TEXT,
-    rating REAL DEFAULT 0,
+    rating REAL,
     type VARCHAR(60) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE,
     updated_at TIMESTAMP WITH TIME ZONE
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS content.person (
 
 -- Создаем таблицу связывающую жанр с фильмом
 CREATE TABLE IF NOT EXISTS content.genre_film_work(
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY,
     film_work_id uuid REFERENCES content.film_work (id) NOT NULL,
     genre_id uuid REFERENCES content.genre (id) NOT NULL,
     created_at timestamp with time zone
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS content.genre_film_work(
 
 -- Сощдаем таблицу связывающую персону с фильмом
 CREATE TABlE IF NOT EXISTS content.person_film_work(
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id uuid PRIMARY KEY,
     film_work_id uuid REFERENCES content.film_work (id) NOT NULL,
     person_id uuid REFERENCES content.person (id) NOT NULL,
     role VARCHAR(200) NOT NULL,
