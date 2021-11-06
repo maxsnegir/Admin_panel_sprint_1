@@ -46,13 +46,19 @@ class Person(BaseModel):
         db_table = "content\".\"person"
 
 
+class RoleType(models.TextChoices):
+    DIRECTOR = 'director', _('Режиссёр')
+    WRITER = 'writer', _('Сценарист')
+    ACTOR = 'actor', _('Актёр')
+
+
 class PersonFilmWork(models.Model):
     """ Модель описывающая связь меджду фильмом и персоной """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     film_work = models.ForeignKey('FilmWork', on_delete=models.CASCADE)
     person = models.ForeignKey("Person", on_delete=models.CASCADE)
-    role = models.CharField(_("Роль"), max_length=255, )
+    role = models.CharField(_("Роль"), max_length=100, choices=RoleType.choices)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -79,12 +85,13 @@ class FilmWorkGenre(models.Model):
         ]
 
 
-class FilmWork(BaseModel):
-    """ Модель описывающая таблицу film_work """
-
-    class FilmWorkType(models.TextChoices):  # наверное лучше отдельную таблицу создать
+class FilmWorkType(models.TextChoices):
         MOVIE = 'movie', _('movie')
         TV_SHOW = 'tv_show', _('TV Show')
+
+
+class FilmWork(BaseModel):
+    """ Модель описывающая таблицу film_work """
 
     title = models.CharField(_('Название'), max_length=255)
     description = models.TextField(_('Описание'), blank=True)
